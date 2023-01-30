@@ -5,7 +5,7 @@ const manifest = JSON.parse(fs.readFileSync('module.json', 'utf8'));
 const tagVersion = process.argv[2].split('/').slice(-1)[0]; 
 
 const dlUrl = new URL(manifest.download);
-dlUrl.pathname = '/tbytnar/the-awakening-foundry/releases/download/'+ tagVersion + 'v0.1.2/awakening.zip';
+dlUrl.pathname = '/tbytnar/the-awakening-foundry/releases/download/'+ tagVersion + '/awakening.zip';
 
 if (!tagVersion || !tagVersion.startsWith('v')) {
   console.error(`Invalid version specified: ${tagVersion}`);
