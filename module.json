@@ -2,7 +2,7 @@
     "name": "theawakeningfoundry",
     "title": "The Awakening Custom Foundry Options",
     "description": "Adds custom stuff developed for The Awakening",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "author": "Erulai",
     "systems": ["dnd5e"],
     "styles": [],
