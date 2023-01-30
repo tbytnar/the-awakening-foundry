@@ -1,21 +1,27 @@
-name: Create and Publish Archive
-on: [push]
+name: Create and Publish Module Release
+
+on:
+  push:
+    tags:
+      - v*
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@0.7.1
-      with:
-        type: 'zip'
-        filename: 'awakening.zip'
-        exclusions: '*.git* /*node_modules/* .editorconfig'
-    - name: Upload Release
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: Update Version
+      shell: bash
+      id: set-version
+      run: echo "::set-output name=version::$(node ./.github/workflows/set-version.js ${{ github.ref }})"
+    - run: zip -r ./awakening.zip module.json custom_skills.js custom_weapons.js
+    - name: Create Release
+      id: create_versioned_release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "awakening.zip"
+        allowUpdates: true
+        name: Release ${{ steps.set-version.outputs.version }}
+        draft: false
+        prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json,./awakening.zip'
